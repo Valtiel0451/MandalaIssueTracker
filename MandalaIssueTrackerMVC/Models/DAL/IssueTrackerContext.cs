@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -15,9 +16,9 @@ namespace MandalaIssueTrackerMVC.Models
         {
         }
 
-        public virtual DbSet<ProjectUsers> ProjectUsers { get; set; }
+        public virtual DbSet<ProjectUser> ProjectUsers { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         /* TEMPORARILY REMOVED THIS TO TEST.
          * 
@@ -33,7 +34,7 @@ namespace MandalaIssueTrackerMVC.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ProjectUsers>(entity =>
+            modelBuilder.Entity<ProjectUser>(entity =>
             {
                 entity.HasKey(e => new { e.ProjId, e.UserId });
 
@@ -55,7 +56,7 @@ namespace MandalaIssueTrackerMVC.Models
                 entity.Property(e => e.ProjId).ValueGeneratedNever();
             });
 
-            modelBuilder.Entity<Users>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
                 entity.Property(e => e.UserId).ValueGeneratedNever();
 
@@ -64,8 +65,43 @@ namespace MandalaIssueTrackerMVC.Models
                 entity.Property(e => e.Username).IsUnicode(false);
             });
 
+            //This should add some basic data into the place on migration
+            modelBuilder.Entity<User>().HasData(
+                        new User
+                        {
+                            UserId = 1,
+                            Name = "Alex Campbell",
+                            Jobname = "Project Leader",
+                            Hashpass = Encoding.ASCII.GetBytes("Hieracon"),
+                            Salt = Encoding.ASCII.GetBytes("2405"),
+                            Username = "ACampb2405",
+                            IsAdmin = true
+                        }
+                );
+            modelBuilder.Entity<Project>().HasData(
+                        new Project
+                        {
+                            ProjId = 1,
+                            Name = "Project 1",
+                            Description = "This is the first test project",
+                            StatusId = 0,
+                            ManagerId = 1
+                        }
+                );
+            modelBuilder.Entity<ProjectUser>().HasData(
+                        new ProjectUser
+                        {
+                            ProjId = 1,
+                            UserId = 1
+                        }
+                );
+
+
             OnModelCreatingPartial(modelBuilder);
         }
+
+
+
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }

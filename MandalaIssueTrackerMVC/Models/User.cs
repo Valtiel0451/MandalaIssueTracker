@@ -6,11 +6,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace MandalaIssueTrackerMVC.Models
 {
     [Table("users")]
-    public partial class Users
+    public partial class User
     {
-        public Users()
+        public User()
         {
-            ProjectUsers = new HashSet<ProjectUsers>();
+            ProjectUsers = new HashSet<ProjectUser>();
         }
 
         [Key]
@@ -38,6 +38,6 @@ namespace MandalaIssueTrackerMVC.Models
         public bool? IsAdmin { get; set; }
 
         [InverseProperty("User")]
-        public virtual ICollection<ProjectUsers> ProjectUsers { get; set; }
+        public virtual ICollection<ProjectUser> ProjectUsers { get; set; }
     }
 }

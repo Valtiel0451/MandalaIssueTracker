@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace MandalaIssueTrackerMVC.Models
 {
     [Table("project_users")]
-    public partial class ProjectUsers
+    public partial class ProjectUser
     {
         [Key]
         [Column("proj_id")]
@@ -19,7 +19,7 @@ namespace MandalaIssueTrackerMVC.Models
         [InverseProperty(nameof(Project.ProjectUsers))]
         public virtual Project Proj { get; set; }
         [ForeignKey(nameof(UserId))]
-        [InverseProperty(nameof(Users.ProjectUsers))]
-        public virtual Users User { get; set; }
+        [InverseProperty(nameof(Models.User.ProjectUsers))]
+        public virtual User User { get; set; }
     }
 }

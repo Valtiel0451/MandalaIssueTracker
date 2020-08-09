@@ -10,7 +10,7 @@ namespace MandalaIssueTrackerMVC.Models
     {
         public Project()
         {
-            ProjectUsers = new HashSet<ProjectUsers>();
+            ProjectUsers = new HashSet<ProjectUser>();
         }
 
         [Key]
@@ -29,6 +29,6 @@ namespace MandalaIssueTrackerMVC.Models
         public int ManagerId { get; set; }
 
         [InverseProperty("Proj")]
-        public virtual ICollection<ProjectUsers> ProjectUsers { get; set; }
+        public virtual ICollection<ProjectUser> ProjectUsers { get; set; }
     }
 }
